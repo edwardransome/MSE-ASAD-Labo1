@@ -2,16 +2,14 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ButtonBar?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1">
    <center>
-      <GridPane BorderPane.alignment="CENTER">
+      <GridPane fx:id="mainGrid" BorderPane.alignment="CENTER">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -61,9 +59,9 @@
    <bottom>
       <ButtonBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <buttons>
-          <Button mnemonicParsing="false" text="Choose start..." textAlignment="CENTER" />
-            <Button mnemonicParsing="false" text="Choose end..." />
-            <Button mnemonicParsing="false" text="Calculate shortest path" />
+          <Button fx:id="chooseStartButton" mnemonicParsing="false" text="Choose start..." textAlignment="CENTER" />
+            <Button fx:id="chooseEndButton" mnemonicParsing="false" text="Choose end..." />
+            <Button fx:id="startButton" mnemonicParsing="false" text="Calculate shortest path" />
         </buttons>
       </ButtonBar>
    </bottom>
