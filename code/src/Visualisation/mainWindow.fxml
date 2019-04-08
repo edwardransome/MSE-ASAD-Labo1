@@ -59,9 +59,9 @@
    <bottom>
       <ButtonBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <buttons>
-          <Button fx:id="chooseStartButton" mnemonicParsing="false" text="Choose start..." textAlignment="CENTER" />
-            <Button fx:id="chooseEndButton" mnemonicParsing="false" text="Choose end..." />
-            <Button fx:id="startButton" mnemonicParsing="false" text="Calculate shortest path" />
+          <Button fx:id="chooseStartButton" mnemonicParsing="false" onAction="#selectStart" text="Choose start..." textAlignment="CENTER" />
+            <Button fx:id="chooseEndButton" mnemonicParsing="false" onAction="#selectEnd" text="Choose end..." />
+            <Button fx:id="startButton" mnemonicParsing="false" onAction="#calculateShortestPath" text="Calculate shortest path" />
         </buttons>
       </ButtonBar>
    </bottom>

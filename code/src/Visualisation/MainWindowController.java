@@ -1,24 +1,139 @@
 package Visualisation;
 
+import TerrainManagement.TerrainManager;
+import Utils.Path;
+import Utils.Position;
+import Utils.Terrain;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.scene.control.TextField;
+import javafx.geometry.Insets;
+import javafx.scene.Node;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.util.Pair;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 
 public class MainWindowController {
+    private final int SIZE = 14;
+    private Position start = new Position(0,0);
+    private Position end = new Position(SIZE,SIZE);
+    private TerrainManager terrainManager;
 
     @FXML
     public GridPane mainGrid;
 
     @FXML
     public void initialize() {
-        for (int i = 0; i < 10; i++) {
-            for (int j = 0; j < 10; j++) {
+        for (int i = 0; i <= SIZE; i++) {
+            for (int j = 0; j <= SIZE; j++) {
                 TextField tf = new TextField("0");
                 mainGrid.add(tf, i, j);
             }
         }
+        refreshView();
     }
 
+    @FXML
+    public void selectStart(){
+        Dialog<Pair<Integer, Integer>> dialog = getCoordDialog("Start");
+
+        Optional<Pair<Integer, Integer>> result = dialog.showAndWait();
+
+        result.ifPresent(pair -> {
+            start = new Position(pair.getKey(), pair.getValue());
+            refreshView();
+        });
+    }
+
+    /**
+     * Creates a dialog box for two coords.
+     * https://stackoverflow.com/questions/31556373/javafx-dialog-with-2-input-fields
+     * @return A Dialog box ready to be shown and waited on
+     */
+    private Dialog<Pair<Integer, Integer>> getCoordDialog(String name) {
+        List<Integer> range = IntStream.rangeClosed(0, SIZE)
+                .boxed().collect(Collectors.toList());
+        Dialog<Pair<Integer, Integer>> dialog = new Dialog<>();
+        dialog.setTitle("Choose " + name);
+        dialog.setHeaderText("" + name + " choice");
+        dialog.setContentText("Choose " + name + " coords:");
+
+        // Set the button types.
+        ButtonType confirmButton = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().addAll(confirmButton, ButtonType.CANCEL);
+
+        GridPane gridPane = new GridPane();
+        gridPane.setHgap(10);
+        gridPane.setVgap(10);
+        gridPane.setPadding(new Insets(20, 150, 10, 10));
+
+        TextField x = new TextField();
+        x.setPromptText("0");
+        TextField y = new TextField();
+        y.setPromptText("0");
+
+        gridPane.add(new Label("X:"), 0, 0);
+        gridPane.add(x, 1, 0);
+        gridPane.add(new Label("Y:"), 2, 0);
+        gridPane.add(y, 3, 0);
+
+        dialog.getDialogPane().setContent(gridPane);
+
+        // Request focus on the username field by default.
+        Platform.runLater(() -> x.requestFocus());
+
+        // Convert the result to a username-password-pair when the login button is clicked.
+        dialog.setResultConverter(dialogButton -> {
+            if (dialogButton == confirmButton) {
+                return new Pair<>(Integer.parseInt(x.getText()), Integer.parseInt(y.getText()));
+            }
+            return null;
+        });
+        return dialog;
+    }
+
+    @FXML
+    public void selectEnd(){
+        Dialog<Pair<Integer, Integer>> dialog = getCoordDialog("End");
+
+        Optional<Pair<Integer, Integer>> result = dialog.showAndWait();
+
+        result.ifPresent(pair -> {
+            end = new Position(pair.getKey(), pair.getValue());
+            refreshView();
+        });
+
+    }
+
+    @FXML
+    public void calculateShortestPath(){
+        if(terrainManager != null){
+            terrainManager.setTerrain(getTerrain());
+            Path result = terrainManager.getShortestPath(start, end);
+        }
+    }
+
+    private Terrain getTerrain() {
+        // Use mainGrid to calculate a Terrain
+        return null;
+    }
+
+    @FXML
+    private void refreshView(){
+        for(Node n: mainGrid.getChildren()) {
+            if (mainGrid.getRowIndex(n) == start.getKey() && mainGrid.getColumnIndex(n) == start.getValue()) {
+                n.setStyle("-fx-background-color: green;");
+            } else if (mainGrid.getRowIndex(n) == end.getKey() && mainGrid.getColumnIndex(n) == end.getValue()) {
+                n.setStyle("-fx-background-color: red;");
+            } else {
+                n.setStyle("-fx-background-color: white;");
+            }
+        }
+    }
 }

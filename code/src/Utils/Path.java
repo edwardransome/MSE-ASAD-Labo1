@@ -1,6 +1,4 @@
-package TerrainManagement;
-
-import javafx.util.Pair;
+package Utils;
 
 import java.util.Iterator;
 import java.util.List;

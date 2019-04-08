@@ -1,4 +1,4 @@
-package TerrainManagement;
+package Utils;
 
 public class Terrain {
     private double[][] grid;

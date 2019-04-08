@@ -1,8 +1,8 @@
 package Computation;
 
 import Interfaces.ShortestPathSolver;
-import TerrainManagement.Path;
-import TerrainManagement.Terrain;
+import Utils.Path;
+import Utils.Terrain;
 
 public class AStarShortestPathSolver implements ShortestPathSolver{
 

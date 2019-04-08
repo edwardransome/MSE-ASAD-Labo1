@@ -1,4 +1,4 @@
-package TerrainManagement;
+package Utils;
 
 import javafx.util.Pair;
 
