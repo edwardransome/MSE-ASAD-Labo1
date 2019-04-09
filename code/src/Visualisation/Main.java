@@ -17,6 +17,10 @@ public class Main extends Application {
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
         ShortestPathSolver solver = new AStarShortestPathSolver();
+        int[] a = new int[3];
+        for(int b: a){
+            System.out.println(b);
+        }
     }
 
 

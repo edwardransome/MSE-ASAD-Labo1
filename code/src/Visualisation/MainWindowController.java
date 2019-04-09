@@ -13,6 +13,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.util.Pair;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -20,9 +21,9 @@ import java.util.stream.IntStream;
 
 
 public class MainWindowController {
-    private final int SIZE = 14;
+    private final int SIZE = 15;
     private Position start = new Position(0,0);
-    private Position end = new Position(SIZE,SIZE);
+    private Position end = new Position(SIZE-1,SIZE-1);
     private TerrainManager terrainManager;
 
     @FXML
@@ -30,8 +31,8 @@ public class MainWindowController {
 
     @FXML
     public void initialize() {
-        for (int i = 0; i <= SIZE; i++) {
-            for (int j = 0; j <= SIZE; j++) {
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
                 TextField tf = new TextField("0");
                 mainGrid.add(tf, i, j);
             }
@@ -57,7 +58,7 @@ public class MainWindowController {
      * @return A Dialog box ready to be shown and waited on
      */
     private Dialog<Pair<Integer, Integer>> getCoordDialog(String name) {
-        List<Integer> range = IntStream.rangeClosed(0, SIZE)
+        List<Integer> range = IntStream.rangeClosed(0, SIZE - 1)
                 .boxed().collect(Collectors.toList());
         Dialog<Pair<Integer, Integer>> dialog = new Dialog<>();
         dialog.setTitle("Choose " + name);
@@ -116,12 +117,26 @@ public class MainWindowController {
         if(terrainManager != null){
             terrainManager.setTerrain(getTerrain());
             Path result = terrainManager.getShortestPath(start, end);
+            Iterator<Position> it = result.iterator();
+            it.forEachRemaining(pos -> {
+                getMainGridNodeAt(pos).setStyle("-fx-background-color: yellow;");
+            });
         }
+    }
+
+    private Node getMainGridNodeAt(Position p){
+        //TODO
+        return null;
     }
 
     private Terrain getTerrain() {
         // Use mainGrid to calculate a Terrain
-        return null;
+        Terrain t = new Terrain(SIZE, SIZE);
+        for(Node n: mainGrid.getChildren()){
+            Double value = Double.parseDouble(((TextField)n).getCharacters().toString());
+            t.setWeight(new Position(mainGrid.getRowIndex(n), mainGrid.getColumnIndex(n)), value);
+        }
+        return t;
     }
 
     @FXML
