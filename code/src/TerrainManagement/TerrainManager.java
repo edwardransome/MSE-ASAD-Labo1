@@ -30,6 +30,6 @@ public class TerrainManager {
     }
 
     public void setEnd(Position p) {
-        this.terrain.setStart(p);
+        this.terrain.setEnd(p);
     }
 }
