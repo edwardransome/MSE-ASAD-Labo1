@@ -20,7 +20,7 @@ import java.util.stream.IntStream;
 
 
 public class MainWindowController {
-    private final int SIZE = 15;
+    private final int SIZE = 20;
     private Position start = new Position(0,0);
     private Position end = new Position(SIZE-1,SIZE-1);
     private TerrainManager terrainManager;
