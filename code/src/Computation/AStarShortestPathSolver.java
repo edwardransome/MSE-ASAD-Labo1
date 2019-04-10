@@ -6,6 +6,9 @@ import Utils.Position;
 import Utils.Terrain;
 import java.util.*;
 
+/**
+ * An implementation of a shortest path solver using A*
+ */
 public class AStarShortestPathSolver implements ShortestPathSolver{
 
     @Override

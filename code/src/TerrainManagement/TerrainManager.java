@@ -5,6 +5,10 @@ import Utils.Path;
 import Utils.Position;
 import Utils.Terrain;
 
+/**
+ * Manages a terrain: allows modifications to its weight, start and end
+ * and uses a solver to return a shortest path from start to end
+ */
 public class TerrainManager {
     private Terrain terrain;
     private ShortestPathSolver solver;

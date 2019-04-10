@@ -10,6 +10,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+/**
+ * Main entry point for the Shortest Path Solver app.
+ */
 public class Main extends Application {
 
     static MainWindowController controller;

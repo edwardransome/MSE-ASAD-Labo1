@@ -1,5 +1,9 @@
 package Utils;
 
+/**
+ * Utility class that represents a terrain. A terrain is a grid with weights
+ * at each node, as well as a start and end node.
+ */
 public class Terrain {
     private double[][] grid;
     private Position start;

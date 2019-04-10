@@ -3,7 +3,6 @@ package Visualisation;
 import TerrainManagement.TerrainManager;
 import Utils.Path;
 import Utils.Position;
-import Utils.Terrain;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
@@ -18,7 +17,10 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-
+/**
+ * Controller for the main window. Contains all controller logic and displays
+ * information using JavaFX.
+ */
 public class MainWindowController {
     private final int SIZE = 20;
     private Position start = new Position(0,0);
