@@ -1,12 +1,20 @@
 package Utils;
 
 public class Terrain {
-    private double[][] grid;
-    private Position start;
-    private Position end;
+    public double[][] grid;
+    public Position start;
+    public Position end;
 
     public Terrain(int width, int height){
         grid = new double[width][height];
+    }
+
+    public int getSizeX() {
+        return grid.length;
+    }
+
+    public int getSizeY() {
+        return grid[0].length;
     }
 
     public void setWeight(Position p, double weight){

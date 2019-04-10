@@ -14,8 +14,9 @@ public class TerrainManager {
     }
     
     public Path getShortestPath(Position start, Position end){
-        //solver.getShortestPath()
-        return null;
+        terrain.start = start;
+        terrain.end = end;
+        return solver.calculateShortestPath(terrain);
     }
 
     public void setSolver(ShortestPathSolver solver) {

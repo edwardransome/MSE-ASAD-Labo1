@@ -124,12 +124,22 @@ public class MainWindowController {
 
     @FXML
     public void calculateShortestPath(){
+        clearAll();
         if(terrainManager != null){
             Path result = terrainManager.getShortestPath(start, end);
             Iterator<Position> it = result.iterator();
             it.forEachRemaining(pos -> {
-                getMainGridNodeAt(pos).setStyle("-fx-background-color: yellow;");
+                // Indexes were inverted
+                getMainGridNodeAt(new Position(pos.getValue(), pos.getKey())).setStyle("-fx-background-color: yellow;");
             });
+        }
+        getMainGridNodeAt(start).setStyle("-fx-background-color: green;");
+        getMainGridNodeAt(end).setStyle("-fx-background-color: red;");
+    }
+
+    public void clearAll() {
+        for(Node n: mainGrid.getChildren()) {
+            n.setStyle("-fx-background-color: white;");
         }
     }
 
@@ -158,6 +168,10 @@ public class MainWindowController {
 
     public void setTerrainManager(TerrainManager terrainManager) {
         this.terrainManager = terrainManager;
+
+        for (Node n: mainGrid.getChildren()) {
+            ((TextField)n).textProperty().setValue("1");
+        }
     }
 
 }
