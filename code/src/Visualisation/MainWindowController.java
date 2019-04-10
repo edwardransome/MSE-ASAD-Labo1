@@ -125,7 +125,6 @@ public class MainWindowController {
     @FXML
     public void calculateShortestPath(){
         if(terrainManager != null){
-            terrainManager.setTerrain(getTerrain());
             Path result = terrainManager.getShortestPath(start, end);
             Iterator<Position> it = result.iterator();
             it.forEachRemaining(pos -> {
@@ -143,15 +142,6 @@ public class MainWindowController {
         return null;
     }
 
-    private Terrain getTerrain() {
-        // Use mainGrid to calculate a Terrain
-        Terrain t = new Terrain(SIZE, SIZE);
-        for(Node n: mainGrid.getChildren()){
-            Double value = Double.parseDouble(((TextField)n).getCharacters().toString());
-            t.setWeight(new Position(mainGrid.getRowIndex(n), mainGrid.getColumnIndex(n)), value);
-        }
-        return t;
-    }
 
     @FXML
     private void refreshView(){

@@ -12,11 +12,7 @@ public class TerrainManager {
     public TerrainManager(int width, int height){
         terrain = new Terrain(width, height);
     }
-
-    public void setTerrain(Terrain terrain) {
-        this.terrain = terrain;
-    }
-
+    
     public Path getShortestPath(Position start, Position end){
         //solver.getShortestPath()
         return null;
