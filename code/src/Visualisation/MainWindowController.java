@@ -10,7 +10,6 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
 import javafx.util.Pair;
 
 import java.util.Iterator;
@@ -125,7 +124,11 @@ public class MainWindowController {
     }
 
     private Node getMainGridNodeAt(Position p){
-        //TODO
+        for (Node n: mainGrid.getChildren()){
+            if (mainGrid.getRowIndex(n) == p.getKey() && mainGrid.getColumnIndex(n) == p.getValue()) {
+                return n;
+            }
+        }
         return null;
     }
 
@@ -151,4 +154,9 @@ public class MainWindowController {
             }
         }
     }
+
+    public void setTerrainManager(TerrainManager terrainManager) {
+        this.terrainManager = terrainManager;
+    }
+
 }
