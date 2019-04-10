@@ -23,12 +23,12 @@ public class AStarShortestPathSolver implements ShortestPathSolver{
                 nodes[i][j] = new Node(i, j);
                 graph.addNode(nodes[i][j]);
                 // Get starting node
-                if(i == terrain.start.getKey() && j == terrain.start.getValue()){
+                if(i == terrain.getStart().getKey() && j == terrain.getStart().getValue()){
                     start = nodes[i][j];
                 }
 
                 // Get last node
-                if(i == terrain.end.getKey() && j == terrain.end.getValue()){
+                if(i == terrain.getEnd().getKey() && j == terrain.getEnd().getValue()){
                     end = nodes[i][j];
                 }
 
@@ -41,16 +41,16 @@ public class AStarShortestPathSolver implements ShortestPathSolver{
 
                 // Add left node
                 if(i != 0)
-                    nodes[i][j].addDestination(nodes[i-1][j], (int)terrain.grid[i-1][j]);
+                    nodes[i][j].addDestination(nodes[i-1][j], (int)terrain.getGrid()[i-1][j]);
 
                 if(j != 0)
-                    nodes[i][j].addDestination(nodes[i][j-1], (int)terrain.grid[i][j-1]);
+                    nodes[i][j].addDestination(nodes[i][j-1], (int)terrain.getGrid()[i][j-1]);
 
                 if(i != terrain.getSizeX()-1)
-                    nodes[i][j].addDestination(nodes[i+1][j], (int)terrain.grid[i+1][j]);
+                    nodes[i][j].addDestination(nodes[i+1][j], (int)terrain.getGrid()[i+1][j]);
 
                 if(j != terrain.getSizeY()-1)
-                    nodes[i][j].addDestination(nodes[i][j+1], (int)terrain.grid[i][j+1]);
+                    nodes[i][j].addDestination(nodes[i][j+1], (int)terrain.getGrid()[i][j+1]);
             }
         }
 

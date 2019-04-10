@@ -13,9 +13,7 @@ public class TerrainManager {
         terrain = new Terrain(width, height);
     }
     
-    public Path getShortestPath(Position start, Position end){
-        terrain.start = start;
-        terrain.end = end;
+    public Path getShortestPath(){
         return solver.calculateShortestPath(terrain);
     }
 
@@ -25,5 +23,13 @@ public class TerrainManager {
 
     public void setWeight(Position p, double newValue) {
         terrain.setWeight(p, newValue);
+    }
+
+    public void setStart(Position p) {
+        this.terrain.setStart(p);
+    }
+
+    public void setEnd(Position p) {
+        this.terrain.setStart(p);
     }
 }

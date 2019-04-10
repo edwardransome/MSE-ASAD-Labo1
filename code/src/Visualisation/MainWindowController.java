@@ -57,7 +57,9 @@ public class MainWindowController {
         Optional<Pair<Integer, Integer>> result = dialog.showAndWait();
 
         result.ifPresent(pair -> {
-            start = new Position(pair.getKey(), pair.getValue());
+            Position p = new Position(pair.getKey(), pair.getValue());
+            start = p;
+            terrainManager.setStart(p);
             refreshView();
         });
     }
@@ -116,7 +118,9 @@ public class MainWindowController {
         Optional<Pair<Integer, Integer>> result = dialog.showAndWait();
 
         result.ifPresent(pair -> {
-            end = new Position(pair.getKey(), pair.getValue());
+            Position p = new Position(pair.getKey(), pair.getValue());
+            end = p;
+            terrainManager.setEnd(p);
             refreshView();
         });
 
@@ -126,11 +130,10 @@ public class MainWindowController {
     public void calculateShortestPath(){
         clearAll();
         if(terrainManager != null){
-            Path result = terrainManager.getShortestPath(start, end);
+            Path result = terrainManager.getShortestPath();
             Iterator<Position> it = result.iterator();
             it.forEachRemaining(pos -> {
-                // Indexes were inverted
-                getMainGridNodeAt(new Position(pos.getValue(), pos.getKey())).setStyle("-fx-background-color: yellow;");
+                getMainGridNodeAt(new Position(pos.getKey(), pos.getValue())).setStyle("-fx-background-color: yellow;");
             });
         }
         getMainGridNodeAt(start).setStyle("-fx-background-color: green;");
@@ -145,7 +148,7 @@ public class MainWindowController {
 
     private Node getMainGridNodeAt(Position p){
         for (Node n: mainGrid.getChildren()){
-            if (mainGrid.getRowIndex(n) == p.getKey() && mainGrid.getColumnIndex(n) == p.getValue()) {
+            if (mainGrid.getRowIndex(n) == p.getValue() && mainGrid.getColumnIndex(n) == p.getKey()) {
                 return n;
             }
         }
@@ -156,9 +159,9 @@ public class MainWindowController {
     @FXML
     private void refreshView(){
         for(Node n: mainGrid.getChildren()) {
-            if (mainGrid.getRowIndex(n) == start.getKey() && mainGrid.getColumnIndex(n) == start.getValue()) {
+            if (mainGrid.getRowIndex(n) == start.getValue() && mainGrid.getColumnIndex(n) == start.getKey()) {
                 n.setStyle("-fx-background-color: green;");
-            } else if (mainGrid.getRowIndex(n) == end.getKey() && mainGrid.getColumnIndex(n) == end.getValue()) {
+            } else if (mainGrid.getRowIndex(n) == end.getValue() && mainGrid.getColumnIndex(n) == end.getKey()) {
                 n.setStyle("-fx-background-color: red;");
             } else {
                 n.setStyle("-fx-background-color: white;");
