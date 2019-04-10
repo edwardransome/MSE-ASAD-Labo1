@@ -33,6 +33,17 @@ public class MainWindowController {
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
                 TextField tf = new TextField("0");
+                final int x = i;
+                final int y = j;
+                tf.textProperty().addListener((observable, oldValue, newValue) -> {
+                    Position p = new Position(x, y);
+                    try{
+                        double weight = Double.parseDouble(newValue);
+                        terrainManager.setWeight(p, weight);
+                    } catch (NumberFormatException e){
+                        tf.textProperty().setValue(oldValue);
+                    }
+                });
                 mainGrid.add(tf, i, j);
             }
         }

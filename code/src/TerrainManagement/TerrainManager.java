@@ -25,4 +25,8 @@ public class TerrainManager {
     public void setSolver(ShortestPathSolver solver) {
         this.solver = solver;
     }
+
+    public void setWeight(Position p, double newValue) {
+        terrain.setWeight(p, newValue);
+    }
 }
