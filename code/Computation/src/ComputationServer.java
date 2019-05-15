@@ -18,7 +18,7 @@ public class ComputationServer implements ShortestPathSolver{
             Registry registry = LocateRegistry.getRegistry();
             registry.bind("ComputationServer", stub);
 
-            System.err.println("Server ready, listening on port");
+            System.err.println("Server ready");
         } catch (Exception e) {
             System.err.println("Server exception: " + e.toString());
             e.printStackTrace();
