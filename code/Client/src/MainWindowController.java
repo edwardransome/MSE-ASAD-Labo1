@@ -1,6 +1,3 @@
-import TerrainManagement.TerrainManager;
-import Utils.Path;
-import Utils.Position;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
