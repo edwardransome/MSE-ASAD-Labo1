@@ -3,7 +3,7 @@ import java.util.*;
 /**
  * An implementation of a shortest path solver using A*
  */
-public class AStarShortestPathSolver implements ShortestPathSolver{
+public class AStarShortestPathSolver implements ShortestPathAlgorithm{
 
     @Override
     public Path calculateShortestPath(Terrain terrain) {

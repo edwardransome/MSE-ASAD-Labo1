@@ -1,21 +1,30 @@
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+import java.util.List;
+
 /**
  * Manages a terrain: allows modifications to its weight, start and end
  * and uses a solver to return a shortest path from start to end
  */
 public class TerrainManager {
     private Terrain terrain;
-    private ShortestPathSolver solver;
 
     public TerrainManager(int width, int height){
         terrain = new Terrain(width, height);
     }
     
-    public Path getShortestPath(){
-        return solver.calculateShortestPath(terrain);
-    }
-
-    public void setSolver(ShortestPathSolver solver) {
-        this.solver = solver;
+    public Path getShortestPath(String alg){
+        String host = "localhost";
+        Path response = null;
+        try {
+            Registry registry = LocateRegistry.getRegistry(host);
+            ShortestPathSolver stub = (ShortestPathSolver) registry.lookup("ComputationServer");
+            response = stub.calculateShortestPath(alg, terrain);
+        } catch (Exception e) {
+            System.err.println("Client exception: " + e.toString());
+            e.printStackTrace();
+        }
+        return response;
     }
 
     public void setWeight(Position p, double newValue) {
