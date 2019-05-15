@@ -1,5 +1,3 @@
-package Visualisation;
-
 import TerrainManagement.TerrainManager;
 import Utils.Path;
 import Utils.Position;

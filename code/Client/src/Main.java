@@ -1,9 +1,6 @@
-package Visualisation;
-
 import Computation.AStarShortestPathSolver;
 import Interfaces.ShortestPathSolver;
 import TerrainManagement.TerrainManager;
-import Utils.Terrain;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -19,7 +16,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("mainWindow.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("Client/mainWindow.fxml"));
         Parent root = loader.load();
         controller = (MainWindowController) loader.getController();
         primaryStage.setTitle("Shortest Path Application");

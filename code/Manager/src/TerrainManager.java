@@ -1,9 +1,7 @@
-package TerrainManagement;
-
 import Interfaces.ShortestPathSolver;
-import Utils.Path;
-import Utils.Position;
-import Utils.Terrain;
+import Path;
+import Position;
+import Terrain;
 
 /**
  * Manages a terrain: allows modifications to its weight, start and end

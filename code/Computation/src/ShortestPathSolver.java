@@ -1,5 +1,3 @@
-package Interfaces;
-
 import Utils.Path;
 import Utils.Terrain;
 
