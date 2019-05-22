@@ -9,6 +9,7 @@ import javax.xml.bind.DatatypeConverter;
 
 public class AuthServer implements AuthManager{
     private static String SECRET_KEY = "ThisSeemsSafeLol";
+
     public static void main(String[] args) {
         try {
             AuthServer obj = new AuthServer();
@@ -16,7 +17,7 @@ public class AuthServer implements AuthManager{
 
             // Bind the remote object's stub in the registry
             Registry registry = LocateRegistry.getRegistry();
-            registry.bind("ComputationServer", stub);
+            registry.bind("AuthManager", stub);
 
             System.err.println("Server ready");
         } catch (Exception e) {
