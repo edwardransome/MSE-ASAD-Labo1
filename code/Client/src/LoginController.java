@@ -37,15 +37,28 @@ public class LoginController {
             Registry registry = LocateRegistry.getRegistry(host);
             AuthManager stub = (AuthManager) registry.lookup("AuthManager");
             String token = stub.login(loginField.getText(), passwordField.getText());
-            if (!token.isEmpty()){
+            if (token != null){
                 //OK! set token and change scene
                 TokenStore.getInstance().setToken(token);
                 Parent pane = FXMLLoader.load(
-                        getClass().getResource("Client/MainWindowController.fxml"));
+                        getClass().getResource("mainWindow.fxml"));
                 Stage primaryStage = (Stage) loginField.getScene().getWindow();
                 primaryStage.getScene().setRoot(pane);
+            }else{
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Invalid credentials");
+                alert.setContentText("Please try again using different credentials.");
+                alert.showAndWait();
+
             }
         } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Connection error");
+            alert.setContentText("A connection error occurred. Is the server online?");
+
+            alert.showAndWait();
             System.err.println("Client exception: " + e.toString());
             e.printStackTrace();
         }

@@ -35,7 +35,9 @@ public class ComputationServer implements ShortestPathSolver{
                 break;
 
             case("DIJKSTRA"):
-                a = null;
+                // TODO implement Dijkstra. Not a priority for this lab
+                // so we just use astar sneakily
+                a = new AStarShortestPathSolver();
                 break;
             default:
                 throw new RuntimeException("Invalid algorithm");
