@@ -43,7 +43,7 @@ public class MainWindowController {
                     Position p = new Position(x, y);
                     try{
                         double weight = Double.parseDouble(newValue);
-                        Registry registry = LocateRegistry.getRegistry("localhost");
+                        Registry registry = LocateRegistry.getRegistry(AddressStore.getInstance().address());
                         AuthManager stub = (AuthManager) registry.lookup("AuthManager");
                         stub.setWeight(TokenStore.getInstance().token(), p, weight);
 
@@ -53,6 +53,7 @@ public class MainWindowController {
                         System.err.println("Client exception: " + e.toString());
                         e.printStackTrace();
                         tf.textProperty().setValue(oldValue);
+                        communicationErrorDialog();
                     }
 
                 });
@@ -60,7 +61,7 @@ public class MainWindowController {
             }
         }
         try{
-            Registry registry = LocateRegistry.getRegistry("localhost");
+            Registry registry = LocateRegistry.getRegistry(AddressStore.getInstance().address());
             AuthManager stub = (AuthManager) registry.lookup("AuthManager");
             List<String> algs = stub.getAlgorithms(TokenStore.getInstance().token());
             ObservableList<String> obsAlgs = FXCollections.observableList(algs);
@@ -70,6 +71,7 @@ public class MainWindowController {
         } catch (Exception e) {
             System.err.println("Client exception: " + e.toString());
             e.printStackTrace();
+            communicationErrorDialog();
         }
 
 
@@ -85,13 +87,14 @@ public class MainWindowController {
         result.ifPresent(pair -> {
             Position p = new Position(pair.getKey(), pair.getValue());
             try {
-                Registry registry = LocateRegistry.getRegistry("localhost");
+                Registry registry = LocateRegistry.getRegistry(AddressStore.getInstance().address());
                 AuthManager stub = (AuthManager) registry.lookup("AuthManager");
                 stub.setStart(TokenStore.getInstance().token(), p);
                 start = p;
 
             } catch (Exception e) {
                 e.printStackTrace();
+                communicationErrorDialog();
             }
 
             refreshView();
@@ -152,13 +155,14 @@ public class MainWindowController {
         result.ifPresent(pair -> {
             Position p = new Position(pair.getKey(), pair.getValue());
             try {
-                Registry registry = LocateRegistry.getRegistry("localhost");
+                Registry registry = LocateRegistry.getRegistry(AddressStore.getInstance().address());
                 AuthManager stub = (AuthManager) registry.lookup("AuthManager");
                 stub.setEnd(TokenStore.getInstance().token(), p);
                 end = p;
 
             } catch (Exception e) {
                 e.printStackTrace();
+                communicationErrorDialog();
             }
 
             refreshView();
@@ -169,9 +173,12 @@ public class MainWindowController {
     public void calculateShortestPath(){
         clearAll();
         try {
-            Registry registry = LocateRegistry.getRegistry("localhost");
+            Registry registry = LocateRegistry.getRegistry(AddressStore.getInstance().address());
             AuthManager stub = (AuthManager) registry.lookup("AuthManager");
             Path result = stub.getShortestPath(TokenStore.getInstance().token(), chooseAlg.getSelectionModel().getSelectedItem());
+            if(result == null){
+                System.out.println("Null path received. Is the computation server down?");
+            }
             Iterator<Position> it = result.iterator();
             it.forEachRemaining(pos -> {
                 getMainGridNodeAt(new Position(pos.getKey(), pos.getValue())).setStyle("-fx-background-color: yellow;");
@@ -181,6 +188,7 @@ public class MainWindowController {
 
         } catch (Exception e) {
             e.printStackTrace();
+            communicationErrorDialog();
         }
     }
 
@@ -211,6 +219,14 @@ public class MainWindowController {
                 n.setStyle("-fx-background-color: white;");
             }
         }
+    }
+
+    private void communicationErrorDialog(){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText("RMI connection error.");
+        alert.setContentText("Unable to connect. Please check the server status and try again.");
+        alert.showAndWait();
     }
 
 

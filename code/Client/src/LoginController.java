@@ -24,7 +24,6 @@ public class LoginController {
 
     @FXML
     public void tryLogin(){
-        String host = "localhost";
         if(loginField.getText().isEmpty() || passwordField.getText().isEmpty()){
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
@@ -34,7 +33,7 @@ public class LoginController {
             return;
         }
         try {
-            Registry registry = LocateRegistry.getRegistry(host);
+            Registry registry = LocateRegistry.getRegistry(AddressStore.getInstance().address());
             AuthManager stub = (AuthManager) registry.lookup("AuthManager");
             String token = stub.login(loginField.getText(), passwordField.getText());
             if (token != null){

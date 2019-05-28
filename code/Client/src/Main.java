@@ -21,6 +21,9 @@ public class Main extends Application {
 
 
     public static void main(String[] args) {
+        if(args.length > 1){
+            AddressStore.getInstance().setAddress(args[1]);
+        }
         launch(args);
     }
 }

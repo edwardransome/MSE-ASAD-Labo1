@@ -2,6 +2,9 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.List;
 
+/**
+ * Interface for an authentication manager. Manages user auth and Terrain operations.
+ */
 public interface AuthManager extends Remote {
 
     public String login(String username, String password) throws RemoteException;

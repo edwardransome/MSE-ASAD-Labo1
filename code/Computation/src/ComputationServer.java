@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ComputationServer implements ShortestPathSolver{
-    private enum Algorithms {ASTAR, DIJKSTRA};
+    private enum Algorithms {ASTAR, DIJKSTRA, BELMAN_FORD};
 
 
     public static void main(String[] args) {
@@ -36,7 +36,10 @@ public class ComputationServer implements ShortestPathSolver{
 
             case("DIJKSTRA"):
                 // TODO implement Dijkstra. Not a priority for this lab
-                // so we just use astar sneakily
+                // so we just use astar everywhere.
+                a = new AStarShortestPathSolver();
+                break;
+            case("BELMAN_FORD"):
                 a = new AStarShortestPathSolver();
                 break;
             default:

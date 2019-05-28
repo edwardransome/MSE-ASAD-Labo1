@@ -24,6 +24,10 @@ public class AuthServer implements AuthManager{
     HashMap<String, Terrain> terrains = new HashMap<>();
 
     public static void main(String[] args) {
+        if(args.length > 1){
+            AddressStore.getInstance().setAddress(args[1]);
+        }
+
         try {
             AuthServer obj = new AuthServer();
             AuthManager stub = (AuthManager) UnicastRemoteObject.exportObject(obj, 0);
@@ -57,9 +61,9 @@ public class AuthServer implements AuthManager{
             if(line.isPresent()){
                 byte[] storedHash = DatatypeConverter.parseHexBinary(line.get()[1]);
                 if(Arrays.equals(hash, storedHash)){
-                    if(!terrains.containsKey(username)){
-                        terrains.put(username, new Terrain(20,20));
-                    }
+                    // We do not store terrains. Reset on each login. If we had a DB
+                    // we could store them persistently.
+                    terrains.put(username, new Terrain(20,20));
                     return createJWT(username);
                 }
             }
@@ -118,7 +122,7 @@ public class AuthServer implements AuthManager{
         }
 
         try {
-            Registry registry = LocateRegistry.getRegistry("localhost");
+            Registry registry = LocateRegistry.getRegistry(AddressStore.getInstance().address());
             ShortestPathSolver stub = (ShortestPathSolver) registry.lookup("ComputationServer");
             return stub.getAlgorithms();
 
@@ -138,7 +142,7 @@ public class AuthServer implements AuthManager{
         }
 
         try {
-            Registry registry = LocateRegistry.getRegistry("localhost");
+            Registry registry = LocateRegistry.getRegistry(AddressStore.getInstance().address());
             ShortestPathSolver stub = (ShortestPathSolver) registry.lookup("ComputationServer");
             return stub.calculateShortestPath(alg, terrains.get(claim.getSubject()));
 
